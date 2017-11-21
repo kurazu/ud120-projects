@@ -9,3 +9,6 @@ terrain:
 
 svm:
 	python -m 'svm.svm_author_id'
+
+dt_exercise:
+	python -m 'decision_tree_exercise.student_main'
