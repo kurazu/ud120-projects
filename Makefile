@@ -6,3 +6,6 @@ naive_bayes:
 
 terrain:
 	python -m 'terrain.student_main'
+
+svm:
+	python -m 'svm.svm_author_id'

@@ -5,13 +5,15 @@
     boundary found in the lesson video, and make a plot that
     visually shows the decision boundary """
 
-
+import os.path
 from .prep_terrain_data import makeTerrainData
 from .class_vis import prettyPicture
 from .classify import classify
 
 # import numpy as np
 # import pylab as pl
+
+HERE = os.path.dirname(__file__)
 
 
 def main():
@@ -48,7 +50,7 @@ def main():
     clf = classify(features_train, labels_train)
 
     # draw the decision boundary with the text points overlaid
-    prettyPicture(clf, features_test, labels_test)
+    prettyPicture(HERE, clf, features_test, labels_test)
 
 
 if __name__ == '__main__':

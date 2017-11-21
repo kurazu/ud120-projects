@@ -10,10 +10,7 @@ warnings.filterwarnings("ignore")
 matplotlib.use('agg')
 
 
-HERE = os.path.dirname(__file__)
-
-
-def prettyPicture(clf, X_test, y_test):
+def prettyPicture(directory, clf, X_test, y_test):
     x_min = 0.0
     x_max = 1.0
     y_min = 0.0
@@ -55,5 +52,5 @@ def prettyPicture(clf, X_test, y_test):
     plt.xlabel("bumpiness")
     plt.ylabel("grade")
 
-    file_path = os.path.join(HERE, 'test.png')
+    file_path = os.path.join(directory, 'test.png')
     plt.savefig(file_path)
