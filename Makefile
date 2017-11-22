@@ -12,3 +12,6 @@ svm:
 
 dt_exercise:
 	python -m 'decision_tree_exercise.student_main'
+
+decision_tree:
+	python -m 'decision_tree.dt_author_id'
