@@ -13,7 +13,7 @@ HERE = os.path.dirname(__file__)
 
 
 def preprocess(
-    words_file = "word_data.pkl", authors_file="email_authors.pkl"
+    words_file = "word_data.pkl", authors_file="email_authors.pkl", percentile=10
 ):
     """
         this function takes a pre-made list of email texts (by default word_data.pkl)
@@ -60,7 +60,7 @@ def preprocess(
 
     ### feature selection, because text is super high dimensional and
     ### can be really computationally chewy as a result
-    selector = SelectPercentile(f_classif, percentile=10)
+    selector = SelectPercentile(f_classif, percentile=percentile)
     selector.fit(features_train_transformed, labels_train)
     features_train_transformed = selector.transform(features_train_transformed).toarray()
     features_test_transformed  = selector.transform(features_test_transformed).toarray()

@@ -15,10 +15,14 @@ from tools import timing, confusion
 
 
 def main():
-    features_train, features_test, labels_train, labels_test = preprocess()
+    features_train, features_test, labels_train, labels_test = preprocess(percentile=1)
 
     # features_train = features_train[:len(features_train) // 100]
     # labels_train = labels_train[:len(labels_train) // 100]
+
+    no_of_examples, no_of_features = features_train.shape
+    print('Examples', no_of_examples)
+    print('Features', no_of_features)
 
     clf = DecisionTreeClassifier(min_samples_split=40)
     timer = timing.Timer()
