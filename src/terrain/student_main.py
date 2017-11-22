@@ -9,9 +9,7 @@ import os.path
 from .prep_terrain_data import makeTerrainData
 from .class_vis import prettyPicture
 from .classify import classify
-
-# import numpy as np
-# import pylab as pl
+from sklearn import metrics
 
 HERE = os.path.dirname(__file__)
 
@@ -49,6 +47,9 @@ def main():
 
     clf = classify(features_train, labels_train)
 
+    predictions = clf.predict(features_test)
+    score = metrics.accuracy_score(labels_test, predictions)
+    print('SCORE', score)
     # draw the decision boundary with the text points overlaid
     prettyPicture(HERE, clf, features_test, labels_test)
 

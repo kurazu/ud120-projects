@@ -51,6 +51,7 @@ def prettyPicture(directory, clf, X_test, y_test):
     plt.legend()
     plt.xlabel("bumpiness")
     plt.ylabel("grade")
+    plt.show()
 
     file_path = os.path.join(directory, 'test.png')
     plt.savefig(file_path)

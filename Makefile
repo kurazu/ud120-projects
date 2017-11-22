@@ -15,3 +15,6 @@ dt_exercise:
 
 decision_tree:
 	python -m 'decision_tree.dt_author_id'
+
+choose_you_own:
+	python -m 'choose_your_own.your_algorithm'
