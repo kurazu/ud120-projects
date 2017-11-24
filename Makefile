@@ -18,3 +18,6 @@ decision_tree:
 
 choose_you_own:
 	python -m 'choose_your_own.your_algorithm'
+
+explore:
+	./venv/bin/python -m 'datasets_questions.explore_enron_data'
