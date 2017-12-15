@@ -16,12 +16,15 @@
 import pickle
 import io
 import os.path
+
 import matplotlib.pyplot as plt
+from sklearn.cross_validation import train_test_split
+from sklearn.linear_model import LinearRegression
 
 import tools
 from tools.feature_format import featureFormat, targetFeatureSplit
 import final_project
-from sklearn.cross_validation import train_test_split
+
 
 
 def main():
@@ -59,11 +62,13 @@ def main():
     ### "r" to differentiate training points from test points.
 
 
+    reg = LinearRegression()
+    reg.fit(feature_train, target_train)
 
+    print('test score', reg.score(feature_test, target_test))
+    print('train score', reg.score(feature_train, target_train))
 
-
-
-
+    print('coef', reg.coef_, 'intercept', reg.intercept_)
 
     ### draw the scatterplot, with color-coded training and testing points
 
