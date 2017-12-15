@@ -18,6 +18,7 @@ import io
 import os.path
 import matplotlib.pyplot as plt
 
+import tools
 from tools.feature_format import featureFormat, targetFeatureSplit
 import final_project
 from sklearn.cross_validation import train_test_split
@@ -34,7 +35,13 @@ def main():
     ### list the features you want to look at--first item in the
     ### list will be the "target" feature
     features_list = ["bonus", "salary"]
-    data = featureFormat(dictionary, features_list, remove_any_zeroes=True)
+    keys_path = os.path.join(
+        os.path.dirname(tools.__file__),
+        'python2_lesson06_keys.pkl'
+    )
+    data = featureFormat(
+        dictionary, features_list, remove_any_zeroes=True, sort_keys=keys_path
+    )
     target, features = targetFeatureSplit(data)
 
     ### training-testing split needed in regression, just like classification
