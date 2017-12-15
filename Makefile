@@ -21,3 +21,6 @@ choose_you_own:
 
 explore:
 	./venv/bin/python -m 'datasets_questions.explore_enron_data'
+
+regression:
+	./venv/bin/python -m 'regression.finance_regression'
