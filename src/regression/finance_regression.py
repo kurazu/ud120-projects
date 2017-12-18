@@ -89,10 +89,12 @@ def main():
 
 
     ### draw the regression line, once it's coded
-    try:
-        plt.plot(feature_test, reg.predict(feature_test))
-    except NameError:
-        pass
+    plt.plot(feature_test, reg.predict(feature_test))
+
+    reg.fit(feature_test, target_test)
+    plt.plot(feature_train, reg.predict(feature_train), color="y")
+    print('coef', reg.coef_, 'intercept', reg.intercept_)
+
     plt.xlabel(features_list[1])
     plt.ylabel(features_list[0])
     plt.legend()
