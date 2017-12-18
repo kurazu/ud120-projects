@@ -24,3 +24,6 @@ explore:
 
 regression:
 	./venv/bin/python -m 'regression.finance_regression'
+
+outliers:
+	./venv/bin/python -m 'outliers.outlier_removal_regression'
