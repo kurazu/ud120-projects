@@ -33,3 +33,6 @@ enron_outliers:
 
 kmeans:
 	./venv/bin/python -m 'k_means.k_means_cluster'
+
+scaling:
+	./venv/bin/python -m 'scaling'
