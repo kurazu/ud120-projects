@@ -9,6 +9,8 @@ from tools.feature_format import featureFormat, targetFeatureSplit
 from tools.loading import load_pickle
 import final_project
 
+from sklearn.cluster import KMeans
+
 
 def draw(
     pred, features, poi, mark_poi=False, name="image.png",
@@ -62,10 +64,15 @@ def main():
     # (as it's currently written, the line below assumes 2 features)
     for f1, f2 in finance_features:
         plt.scatter(f1, f2)
+        plt.xlabel(feature_1)
+        plt.ylabel(feature_2)
     plt.show()
 
     # cluster here; create predictions of the cluster labels
     # for the data and store them to a list called pred
+    clustering = KMeans(n_clusters=2)
+    clustering.fit(X=finance_features)
+    pred = clustering.predict(finance_features)
 
     # rename the "name" parameter when you change the number of features
     # so that the figure gets saved to a different file
