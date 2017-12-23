@@ -16,9 +16,18 @@ def main():
         os.path.dirname(final_project.__file__), 'final_project_dataset.pkl'
     )
     data_dict = load_pickle(file_path)
+    data_dict.pop('TOTAL')
     features = ["salary", "bonus"]
     data = featureFormat(data_dict, features)
     ### your code below
+    for salary, bonus in data:
+        matplotlib.pyplot.scatter(salary, bonus)
+
+    matplotlib.pyplot.xlabel("salary")
+    matplotlib.pyplot.ylabel("bonus")
+    matplotlib.pyplot.show()
+
+    import pdb; pdb.set_trace()
 
 
 if __name__ == '__main__':

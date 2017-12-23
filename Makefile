@@ -27,3 +27,6 @@ regression:
 
 outliers:
 	./venv/bin/python -m 'outliers.outlier_removal_regression'
+
+enron_outliers:
+	./venv/bin/python -m 'outliers.enron_outliers'
