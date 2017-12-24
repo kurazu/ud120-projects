@@ -13,6 +13,7 @@ setup(
         'pandas',
         'scipy',
         'sklearn',
-        'matplotlib'
+        'matplotlib',
+        'nltk'
     ]
 )
