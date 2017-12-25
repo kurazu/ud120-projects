@@ -71,8 +71,10 @@ def process(from_sara, from_chris):
     # in Part 4, do TfIdf vectorization here
     vectorizer = TfidfVectorizer(stop_words='english')
     X = vectorizer.fit_transform(word_data)
-    print(len(vectorizer.get_feature_names()))
-    return X
+    feature_names = vectorizer.get_feature_names()
+    print(len(feature_names))
+    import pdb; pdb.set_trace()
+    dump_pickle(os.path.join(HERE, "X.pkl"), X)
 
 
 def main():
