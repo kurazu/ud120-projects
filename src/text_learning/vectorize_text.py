@@ -4,6 +4,7 @@ import os.path
 import re
 import io
 
+from sklearn.feature_extraction.text import TfidfVectorizer
 from tools.parse_out_email_text import parseOutText
 from tools.loading import dump_pickle
 
@@ -42,11 +43,15 @@ def process(from_sara, from_chris):
             with io.open(path, 'r', encoding='utf-8') as email:
                 stemmed_text = parseOutText(email)
 
-            words = (
-                word for word in re.split(r'\s', stemmed_text)
-                if word not in SIGNATURE_WORDS
-            )
-            word_data.append(' '.join(words))
+            for word in SIGNATURE_WORDS:
+                stemmed_text = stemmed_text.replace(word, '')
+
+            word_data.append(stemmed_text)
+            # words = (
+            #     word for word in re.split(r'\s+', stemmed_text)
+            #     if word not in SIGNATURE_WORDS
+            # )
+            # word_data.append(' '.join(words))
             from_data.append(from_whom)
             # use parseOutText to extract the text from the opened email
 
@@ -63,8 +68,11 @@ def process(from_sara, from_chris):
     dump_pickle(os.path.join(HERE, "your_word_data.pkl"), word_data)
     dump_pickle(os.path.join(HERE, "your_email_authors.pkl"), from_data)
 
-    import pdb; pdb.set_trace()
     # in Part 4, do TfIdf vectorization here
+    vectorizer = TfidfVectorizer(stop_words='english')
+    X = vectorizer.fit_transform(word_data)
+    print(len(vectorizer.get_feature_names()))
+    return X
 
 
 def main():
