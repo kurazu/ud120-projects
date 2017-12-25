@@ -24,18 +24,30 @@ from tools.loading import dump_pickle
 HERE = os.path.dirname(__file__)
 TOP_DIR = os.path.join(HERE, '..', '..')
 
+SIGNATURE_WORDS = {
+    'sara', 'shackleton', 'chris', 'germani'
+}
+
 
 def process(from_sara, from_chris):
     from_data = []
     word_data = []
 
-    for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
+    for from_whom, name, from_person in [
+        (0, "sara", from_sara), (1, "chris", from_chris)
+    ]:
         for path in from_person:
             path = os.path.join(TOP_DIR, path[:-1])
             print(path)
             with io.open(path, 'r', encoding='utf-8') as email:
-                pass
+                stemmed_text = parseOutText(email)
 
+            words = (
+                word for word in re.split(r'\s', stemmed_text)
+                if word not in SIGNATURE_WORDS
+            )
+            word_data.append(' '.join(words))
+            from_data.append(from_whom)
             # use parseOutText to extract the text from the opened email
 
             # use str.replace() to remove any instances of the words
@@ -51,6 +63,7 @@ def process(from_sara, from_chris):
     dump_pickle(os.path.join(HERE, "your_word_data.pkl"), word_data)
     dump_pickle(os.path.join(HERE, "your_email_authors.pkl"), from_data)
 
+    import pdb; pdb.set_trace()
     # in Part 4, do TfIdf vectorization here
 
 
