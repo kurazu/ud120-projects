@@ -39,3 +39,6 @@ scaling:
 
 parse_out_email_text:
 	./venv/bin/python -m 'tools.parse_out_email_text'
+
+vectorize_text:
+	./venv/bin/python -m 'text_learning.vectorize_text'
