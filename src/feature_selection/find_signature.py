@@ -1,4 +1,5 @@
 import numpy
+from operator import itemgetter
 
 import text_learning
 from tools.loading import load_pickle
@@ -6,6 +7,8 @@ import os.path
 
 from sklearn import cross_validation
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 
 
 def main():
@@ -44,7 +47,22 @@ def main():
     labels_train   = labels_train[:150]
 
     # your code goes here
-    pass
+    classifier = DecisionTreeClassifier()
+    classifier.fit(features_train, labels_train)
+
+    train_predictions = classifier.predict(features_train)
+    print('Train score', accuracy_score(labels_train, train_predictions))
+
+    test_predictions = classifier.predict(features_test)
+    print('Test score', accuracy_score(labels_test, test_predictions))
+
+    sorted_features = sorted(
+        enumerate(classifier.feature_importances_),
+        key=itemgetter(1),
+        reverse=True
+    )
+    for idx, feature_importance in sorted_features[:20]:
+        print(feature_importance, idx)
 
 
 if __name__ == '__main__':

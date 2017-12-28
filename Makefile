@@ -42,3 +42,6 @@ parse_out_email_text:
 
 vectorize_text:
 	./venv/bin/python -m 'text_learning.vectorize_text'
+
+find_signature:
+	./venv/bin/python -m 'feature_selection.find_signature'
