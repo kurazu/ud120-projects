@@ -61,8 +61,9 @@ def main():
         key=itemgetter(1),
         reverse=True
     )
+    feature_names = vectorizer.get_feature_names()
     for idx, feature_importance in sorted_features[:20]:
-        print(feature_importance, idx)
+        print(feature_importance, idx, feature_names[idx])
 
 
 if __name__ == '__main__':
