@@ -26,7 +26,7 @@ HERE = os.path.dirname(__file__)
 TOP_DIR = os.path.join(HERE, '..', '..')
 
 SIGNATURE_WORDS = {
-    'sara', 'shackleton', 'chris', 'germani'
+    'sara', 'shackleton', 'chris', 'germani', 'sshacklensf', 'cgermannsf'
 }
 
 
