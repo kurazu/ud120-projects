@@ -13,6 +13,7 @@
 import os.path
 
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
 
 from tools.feature_format import featureFormat, targetFeatureSplit
 from tools.loading import load_pickle
@@ -39,10 +40,13 @@ def main():
     data = featureFormat(data_dict, features_list, sort_keys=keys_path)
     labels, features = targetFeatureSplit(data)
 
+    features_train, features_test, labels_train, labels_test = \
+        train_test_split(features, labels, test_size=0.3, random_state=42)
+
     # it's all yours from here forward!
     clf = DecisionTreeClassifier()
-    clf.fit(features, labels)
-    print(clf.score(features, labels))
+    clf.fit(features_train, labels_train)
+    print(clf.score(features_test, labels_test))
 
 
 if __name__ == '__main__':
