@@ -48,3 +48,6 @@ find_signature:
 
 pca:
 	./venv/bin/python -m 'pca.eigenfaces'
+
+validation:
+	./venv/bin/python -m 'validation.validate_poi'
