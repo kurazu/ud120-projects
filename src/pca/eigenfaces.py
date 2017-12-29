@@ -24,6 +24,7 @@ from sklearn.datasets import fetch_lfw_people
 from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import f1_score
 from sklearn.decomposition import RandomizedPCA
 from sklearn.svm import SVC
 
@@ -31,7 +32,6 @@ from sklearn.svm import SVC
 def main():
     # Display progress logs on stdout
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
-
 
     # Download the data, if not already on disk and load it as numpy arrays
     lfw_people = fetch_lfw_people(min_faces_per_person=70, resize=0.4)
@@ -55,57 +55,67 @@ def main():
     print("n_features: %d" % n_features)
     print("n_classes: %d" % n_classes)
 
-
     # Split into a training and testing set
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.25, random_state=42
     )
 
-    # Compute a PCA (eigenfaces) on the face dataset (treated as unlabeled
-    # dataset): unsupervised feature extraction / dimensionality reduction
-    n_components = 150
+    def xprint(*args, **kwargs):
+        pass
 
-    print("Extracting the top %d eigenfaces from %d faces" % (
-        n_components, X_train.shape[0]
-    ))
-    t0 = time()
-    pca = RandomizedPCA(n_components=n_components, whiten=True).fit(X_train)
-    print("done in %0.3fs" % (time() - t0))
+    N_COMPONENTS = [10, 15, 25, 50, 100, 250]
+    for n_components in N_COMPONENTS:
+        # Compute a PCA (eigenfaces) on the face dataset (treated as unlabeled
+        # dataset): unsupervised feature extraction / dimensionality reduction
 
-    eigenfaces = pca.components_.reshape((n_components, h, w))
+        xprint("Extracting the top %d eigenfaces from %d faces" % (
+            n_components, X_train.shape[0]
+        ))
+        t0 = time()
+        pca = RandomizedPCA(
+            n_components=n_components, whiten=True
+        ).fit(X_train)
+        xprint("done in %0.3fs" % (time() - t0))
 
-    print("Projecting the input data on the eigenfaces orthonormal basis")
-    t0 = time()
-    X_train_pca = pca.transform(X_train)
-    X_test_pca = pca.transform(X_test)
-    print("done in %0.3fs" % (time() - t0))
+        eigenfaces = pca.components_.reshape((n_components, h, w))
 
-    # Train a SVM classification model
+        xprint("Projecting the input data on the eigenfaces orthonormal basis")
+        t0 = time()
+        X_train_pca = pca.transform(X_train)
+        X_test_pca = pca.transform(X_test)
+        xprint("done in %0.3fs" % (time() - t0))
 
-    print("Fitting the classifier to the training set")
-    t0 = time()
-    param_grid = {
-        'C': [1e3, 5e3, 1e4, 5e4, 1e5],
-        'gamma': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1],
-    }
-    # for sklearn version 0.16 or prior,
-    # the class_weight parameter value is 'auto'
-    clf = GridSearchCV(SVC(kernel='rbf', class_weight='balanced'), param_grid)
-    clf = clf.fit(X_train_pca, y_train)
-    print("done in %0.3fs" % (time() - t0))
-    print("Best estimator found by grid search:")
-    print(clf.best_estimator_)
+        # Train a SVM classification model
 
-    # Quantitative evaluation of the model quality on the test set
+        xprint("Fitting the classifier to the training set")
+        t0 = time()
+        param_grid = {
+            'C': [1e3, 5e3, 1e4, 5e4, 1e5],
+            'gamma': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1],
+        }
+        # for sklearn version 0.16 or prior,
+        # the class_weight parameter value is 'auto'
+        clf = GridSearchCV(
+            SVC(kernel='rbf', class_weight='balanced'), param_grid
+        )
+        clf = clf.fit(X_train_pca, y_train)
+        xprint("done in %0.3fs" % (time() - t0))
+        xprint("Best estimator found by grid search:")
+        xprint(clf.best_estimator_)
 
-    print("Predicting the people names on the testing set")
-    t0 = time()
-    y_pred = clf.predict(X_test_pca)
-    print("done in %0.3fs" % (time() - t0))
+        # Quantitative evaluation of the model quality on the test set
 
-    print(classification_report(y_test, y_pred, target_names=target_names))
-    print(confusion_matrix(y_test, y_pred, labels=list(range(n_classes))))
+        xprint("Predicting the people names on the testing set")
+        t0 = time()
+        y_pred = clf.predict(X_test_pca)
+        xprint("done in %0.3fs" % (time() - t0))
 
+        print(
+            n_components,
+            classification_report(y_test, y_pred, target_names=target_names)
+        )
+
+    return
     # Qualitative evaluation of the predictions using matplotlib
 
     def plot_gallery(images, titles, h, w, n_row=3, n_col=4):
