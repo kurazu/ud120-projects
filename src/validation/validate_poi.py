@@ -12,6 +12,8 @@
 
 import os.path
 
+from sklearn.tree import DecisionTreeClassifier
+
 from tools.feature_format import featureFormat, targetFeatureSplit
 from tools.loading import load_pickle
 
@@ -38,6 +40,9 @@ def main():
     labels, features = targetFeatureSplit(data)
 
     # it's all yours from here forward!
+    clf = DecisionTreeClassifier()
+    clf.fit(features, labels)
+    print(clf.score(features, labels))
 
 
 if __name__ == '__main__':
