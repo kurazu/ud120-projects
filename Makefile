@@ -45,3 +45,6 @@ vectorize_text:
 
 find_signature:
 	./venv/bin/python -m 'feature_selection.find_signature'
+
+pca:
+	./venv/bin/python -m 'pca.eigenfaces'

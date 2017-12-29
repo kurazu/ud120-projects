@@ -14,6 +14,7 @@ setup(
         'scipy',
         'sklearn',
         'matplotlib',
-        'nltk'
+        'nltk',
+        'Pillow'
     ]
 )
