@@ -11,6 +11,7 @@ import os.path
 
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, precision_score, recall_score
 
 from tools.feature_format import featureFormat, targetFeatureSplit
 from tools.loading import load_pickle
@@ -43,7 +44,17 @@ def main():
     # it's all yours from here forward!
     clf = DecisionTreeClassifier()
     clf.fit(features_train, labels_train)
-    print(clf.score(features_test, labels_test))
+    print('Accuracy', clf.score(features_test, labels_test))
+    predictions = clf.predict(features_test)
+    conf_matrix = confusion_matrix(
+        labels_test, predictions, labels=[True, False]
+    )
+    print('Confusion matrix')
+    print(conf_matrix)
+    precision = precision_score(labels_test, predictions)
+    print('Precision', precision)
+    recall = recall_score(labels_test, predictions)
+    print('Recall', recall)
 
 
 if __name__ == '__main__':
