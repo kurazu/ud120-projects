@@ -51,3 +51,6 @@ pca:
 
 validation:
 	./venv/bin/python -m 'validation.validate_poi'
+
+evaluation:
+	./venv/bin/python -m 'evaluation.evaluate_poi_identifier'
